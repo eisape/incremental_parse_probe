@@ -1,0 +1,55 @@
+cuda: true
+data_params:
+  action_ngram_pad: 40
+  action_pad: 400
+  num_workers: 4
+  pin_memory: false
+  root_dir: data
+  test:
+    batch_size: 15
+    dry_run: false
+    shuffle: true
+  token_pad: 150
+  train:
+    batch_size: 15
+    dry_run: false
+    shuffle: true
+  valid:
+    batch_size: 15
+    dry_run: false
+    shuffle: false
+device: cuda
+exp_params:
+  manual_seed: 1265
+  optimizer_params:
+    lr: 0.001
+  optimizer_type: Adam
+  scheduler_params:
+    factor: 0.1
+    mode: min
+    patience: 0
+  scheduler_type: ReduceLROnPlateau
+logging_params:
+  save_dir: ./experiment_checkpoints/eval/gpt2-xl/
+  version: layer_7
+pretrained_model: gpt2-xl
+probe_params:
+  add_root: true
+  checkpoint_path: false
+  data_sources:
+  - action_ids
+  - gold_tuples
+  embeddings_dropout_rate: 0
+  layer: 7
+  layer_dropout_rate: 0.2
+  num_layers: 3
+  oracle_params:
+    mappings_file: data/mappings-ptb.txt
+    name: ArcStandard
+  probe_name: StackActionProbe
+  probe_type: StackActionProbe
+trainer_params:
+  accumulate_grad_batches: 1
+  gpus:
+  - 2
+  max_epochs: 25
